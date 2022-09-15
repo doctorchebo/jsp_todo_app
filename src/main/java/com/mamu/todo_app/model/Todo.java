@@ -1,16 +1,12 @@
 package com.mamu.todo_app.model;
-
-
-import com.mamu.todo_app.dto.TodoDTO;
 import com.mamu.todo_app.types.StatusType;
+import com.mamu.todo_app.validation.constraints.DateNotBeforeTodayConstraint;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import javax.validation.constraints.NotEmpty;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -20,15 +16,17 @@ import java.util.UUID;
 @Builder
 public class Todo {
     @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotEmpty(message = "Title is required")
     private String title;
+    @NotEmpty(message = "Description is required")
     private String description;
     private StatusType status;
-    private LocalDate targetDate;
+    @DateNotBeforeTodayConstraint
+    private Date targetDate;
 
-    public Todo(String title, String description, StatusType status, LocalDate targetDate) {
+    public Todo(String title, String description, StatusType status, Date targetDate) {
         this.title = title;
         this.description = description;
         this.status = status;

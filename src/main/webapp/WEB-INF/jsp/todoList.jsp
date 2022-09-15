@@ -1,10 +1,11 @@
 <%@ include file="../common/header.jspf"%>
-<link rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous">
-
-<div class="container">
+<%@ include file="../common/navigation.jspf"%>
+<div class="container mt-3">
+    <c:if test="${not empty message}">
+        <div class="alert alert-success" role="alert">
+                ${message}
+        </div>
+    </c:if>
     <div>
         <a type="button" class="btn btn-primary btn-md" href="TodoList/new">Add Todo</a>
     </div>
@@ -14,14 +15,14 @@
             <h3>List of Todos</h3>
         </div>
         <div class="panel-body">
-            <table class="table table-striped">
-                <thead>
+            <table class="table">
+                <thead class="table-dark">
                 <tr>
                     <th width="20%">Title</th>
                     <th width="20%">Description</th>
                     <th width="10%">Status</th>
                     <th width="20%">Target Date</th>
-                    <th width="15%">Edit</th>
+                    <th width="15%">Update</th>
                     <th width="15%">Delete</th>
                 </tr>
                 </thead>
@@ -34,7 +35,7 @@
                         <td><fmt:formatDate value="${todo.targetDate}"
                                             pattern="dd/MM/yyyy" /></td>
                         <td><a type="button" class="btn btn-success"
-                               href="TodoList/update?id=${todo.id}">Update</a>
+                               href="TodoList/edit?id=${todo.id}">Update</a>
                             </td>
                         <td><a type="button" class="btn btn-warning"
                                href="TodoList/delete?id=${todo.id}">Delete</a></td>

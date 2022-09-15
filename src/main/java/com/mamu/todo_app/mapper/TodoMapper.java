@@ -5,6 +5,8 @@ import com.mamu.todo_app.model.Todo;
 import com.mamu.todo_app.types.StatusType;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -19,7 +21,7 @@ public class TodoMapper {
                 .build();
     }
 
-    public Todo toTodo (TodoDTO todoDTO){
+    public Todo toTodo (TodoDTO todoDTO) throws ParseException {
         return Todo.builder()
                 .title(todoDTO.getTitle())
                 .description(todoDTO.getDescription())
@@ -48,7 +50,7 @@ public class TodoMapper {
         } return null;
     }
 
-    public LocalDate getDate(String date){
-        return LocalDate.parse(date);
+    public Date getDate(String date) throws ParseException {
+        return new SimpleDateFormat("dd/MM/yyyy").parse(date);
     }
 }

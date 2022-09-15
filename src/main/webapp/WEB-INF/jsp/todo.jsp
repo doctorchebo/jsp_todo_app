@@ -1,16 +1,27 @@
 <%@ include file="../common/header.jspf"%>
-<link rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous">
-<div class="container">
+<%@ include file="../common/navigation.jspf"%>
+<div class="container mt-3">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3 ">
+        <c:if test="${not empty message}">
+            <div class="alert alert-success" role="alert">
+                    ${message}
+            </div>
+        </c:if>
+        <div class="col-md-6 offset-3">
             <div class="panel panel-primary">
-                <div class="panel-heading"><b>Add Todo</b></div>
+                <c:choose>
+                    <c:when test="${todo.id==null}">
+                        <div class="display-4 text-center"><b>Add Todo</b></div>
+                        <br />
+                    </c:when>
+                    <c:otherwise>
+                        <div class="display-4 text-center"><b>Edit Todo</b></div>
+                        <br />
+                    </c:otherwise>
+                </c:choose>
                 <div class="panel-body">
-                    <%--@elvariable id="todo" type="uuid"--%>
-                    <form:form method="post" modelAttribute="todo">
+                    <%--@elvariable id="todo" type="long"--%>
+                    <form:form method="post" modelAttribute="todo" class="form-control">
                         <form:hidden path="id" />
                         <fieldset class="form-group">
                             <form:label path="title">Title</form:label>
@@ -26,7 +37,7 @@
                         </fieldset>
                         <fieldset class="form-group">
                             <form:label path="status">Status</form:label>
-                            <form:select path="status"  class="form-control"
+                            <form:select path="status"  class="form-select"
                                         required="required" items="${status}">
                             </form:select>
                             <form:errors path="status" cssClass="text-warning" />
@@ -34,11 +45,11 @@
 
                         <fieldset class="form-group">
                             <form:label path="targetDate">Target Date</form:label>
-                            <form:input path="targetDate" type="text" class="form-control"
+                            <form:input path="targetDate" type="text" placeholder="dd/mm/yyyy" class="form-control"
                                         required="required" />
                             <form:errors path="targetDate" cssClass="text-warning" />
                         </fieldset>
-
+                        <br>
                         <button type="submit" class="btn btn-success">Save</button>
                     </form:form>
                 </div>
