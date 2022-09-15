@@ -69,8 +69,9 @@ public class TodoController {
     }
 
     @PostMapping("/edit")
-    public String updateEditTodo(@Valid Todo todo, BindingResult result){
+    public String updateEditTodo(@Valid Todo todo, BindingResult result, ModelMap model){
         if(result.hasErrors()){
+            model.put("status", enumNames.getEnumNames());
             return "todo";
         }
         todoService.update(todo);

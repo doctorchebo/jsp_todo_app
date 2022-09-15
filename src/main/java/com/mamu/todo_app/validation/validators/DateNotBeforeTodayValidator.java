@@ -25,7 +25,7 @@ public class DateNotBeforeTodayValidator implements
             System.out.println("today" + today);
             System.out.println("Validation applied");
 
-            return targetDate.compareTo(today) > 0;
+            return targetDate.compareTo(today) >= 0;
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage());
         }
