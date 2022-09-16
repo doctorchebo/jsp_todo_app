@@ -1,11 +1,9 @@
 package com.mamu.todo_app.dto;
-
-import com.mamu.todo_app.model.Todo;
-import lombok.*;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.Builder;
 
 @Getter
 @Setter

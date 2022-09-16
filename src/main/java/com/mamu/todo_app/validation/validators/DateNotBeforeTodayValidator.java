@@ -1,7 +1,5 @@
 package com.mamu.todo_app.validation.validators;
-
 import com.mamu.todo_app.validation.constraints.DateNotBeforeTodayConstraint;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.text.DateFormat;
@@ -21,10 +19,6 @@ public class DateNotBeforeTodayValidator implements
             DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
             Date todayWithTime = new Date();
             Date today = formatter.parse(formatter.format(todayWithTime));
-            System.out.println("target" + targetDate);
-            System.out.println("today" + today);
-            System.out.println("Validation applied");
-
             return targetDate.compareTo(today) >= 0;
         } catch (ParseException e) {
             throw new RuntimeException(e.getMessage());

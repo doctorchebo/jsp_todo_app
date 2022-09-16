@@ -38,7 +38,8 @@
                         <fieldset class="form-group">
                             <form:label path="status">Status</form:label>
                             <form:select path="status"  class="form-select"
-                                        required="required" items="${status}">
+                                        required="required">
+                                <form:options items="${status}"/>
                             </form:select>
                             <form:errors path="status" cssClass="text-warning" />
                         </fieldset>

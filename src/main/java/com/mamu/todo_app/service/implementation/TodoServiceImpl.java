@@ -1,6 +1,4 @@
 package com.mamu.todo_app.service.implementation;
-
-import com.mamu.todo_app.dto.TodoDTO;
 import com.mamu.todo_app.exception.ResourceNotFoundException;
 import com.mamu.todo_app.mapper.TodoMapper;
 import com.mamu.todo_app.model.Todo;
@@ -8,8 +6,8 @@ import com.mamu.todo_app.repository.TodoRepository;
 import com.mamu.todo_app.service.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+import static com.mamu.todo_app.constants.TodoConstants.RESOURCE_NOT_FOUND;
 
 @Service
 public class TodoServiceImpl implements TodoService {
@@ -31,7 +29,7 @@ public class TodoServiceImpl implements TodoService {
     public Todo findById(Long id) {
         try{
             Todo todo = todoRepository.findById(id).orElseThrow(() ->
-                    new ResourceNotFoundException("The todo with id " + id.toString() + " was not found"));
+                    new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, id)));
             return todo;
         } catch (Exception e){
             throw new IllegalStateException(e.getMessage());
@@ -61,7 +59,7 @@ public class TodoServiceImpl implements TodoService {
     public void delete(Long id) {
         try{
             todoRepository.findById(id).orElseThrow(() ->
-                    new ResourceNotFoundException("The todo with id " + id.toString() + " was not found"));
+                    new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, id)));
             todoRepository.deleteById(id);
         } catch (Exception e){
             throw new IllegalStateException(e.getMessage());
