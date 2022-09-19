@@ -79,4 +79,10 @@ public class TodoController {
         todoService.delete(id);
         return "redirect:/TodoList/";
     }
+
+    @GetMapping("/complete")
+    public String completeTodo(@RequestParam Long id){
+        todoService.complete(id);
+        return "redirect:/TodoList/";
+    }
 }

@@ -24,6 +24,7 @@
                     <th width="20%">Target Date</th>
                     <th width="15%">Update</th>
                     <th width="15%">Delete</th>
+                    <th width="15%">Set completed</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,6 +40,8 @@
                             </td>
                         <td><a type="button" class="btn btn-warning"
                                href="delete?id=${todo.id}">Delete</a></td>
+                        <td class="text-center"><a type="button" class="btn btn-light"
+                               href="complete?id=${todo.id}"><i class="fa fa-check-circle" aria-hidden="true"></i></a></td>
                     </tr>
                 </c:forEach>
                 </tbody>

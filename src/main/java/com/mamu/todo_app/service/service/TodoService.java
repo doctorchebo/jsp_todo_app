@@ -8,4 +8,5 @@ public interface TodoService {
     void save(Todo todo);
     void update(Todo todo);
     void delete(Long id);
+    void complete (Long id);
 }

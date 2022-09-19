@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import static com.mamu.todo_app.constants.TodoConstants.RESOURCE_NOT_FOUND;
+import static com.mamu.todo_app.types.StatusType.COMPLETE;
 
 @Service
 public class TodoServiceImpl implements TodoService {
@@ -66,6 +67,21 @@ public class TodoServiceImpl implements TodoService {
             todoRepository.findById(id).orElseThrow(() ->
                     new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, id)));
             todoRepository.deleteById(id);
+        } catch (Exception e){
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void complete(Long id) {
+        try {
+            Todo todo = todoRepository.findById(id).orElseThrow(() ->
+                    new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, id)));
+            todo.setTitle(todo.getTitle());
+            todo.setDescription(todo.getDescription());
+            todo.setStatus(COMPLETE);
+            todo.setTargetDate(todo.getTargetDate());
+            todoRepository.save(todo);
         } catch (Exception e){
             throw new IllegalStateException(e.getMessage());
         }

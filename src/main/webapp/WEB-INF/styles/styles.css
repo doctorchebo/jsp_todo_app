@@ -18,3 +18,7 @@ a {
     height: 2rem;
     text-align: center;
 }
+
+.complete {
+    color: darkgreen;
+}
