@@ -80,6 +80,7 @@ public class TodoServiceImpl implements TodoService {
             todo.setTitle(todo.getTitle());
             todo.setDescription(todo.getDescription());
             todo.setStatus(COMPLETE);
+            todo.setStartDate(todo.getStartDate());
             todo.setTargetDate(todo.getTargetDate());
             todoRepository.save(todo);
         } catch (Exception e){

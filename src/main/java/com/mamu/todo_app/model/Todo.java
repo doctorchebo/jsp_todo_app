@@ -35,6 +35,8 @@ public class Todo {
     @NotNull(message = STATUS_VALIDATION_MESSAGE)
     private StatusType status;
     @DateNotBeforeTodayConstraint
+    private Date startDate;
+    @DateNotBeforeTodayConstraint
     private Date targetDate;
 
     public Todo(String title, String description, StatusType status, Date targetDate) {

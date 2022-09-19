@@ -18,13 +18,14 @@
             <table class="table">
                 <thead class="table-dark">
                 <tr>
-                    <th width="20%">Title</th>
+                    <th width="15%">Title</th>
                     <th width="20%">Description</th>
                     <th width="10%">Status</th>
-                    <th width="20%">Target Date</th>
-                    <th width="15%">Update</th>
-                    <th width="15%">Delete</th>
-                    <th width="15%">Set completed</th>
+                    <th width="10%">Start Date</th>
+                    <th width="10%">Target Date</th>
+                    <th width="10%">Update</th>
+                    <th width="10%">Delete</th>
+                    <th width="5%">Set Done</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,6 +34,8 @@
                         <td>${todo.title}</td>
                         <td>${todo.description}</td>
                         <td>${todo.status}</td>
+                        <td><fmt:formatDate value="${todo.startDate}"
+                                            pattern="dd/MM/yyyy" /></td>
                         <td><fmt:formatDate value="${todo.targetDate}"
                                             pattern="dd/MM/yyyy" /></td>
                         <td><a type="button" class="btn btn-success"
