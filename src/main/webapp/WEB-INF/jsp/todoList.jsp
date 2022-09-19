@@ -7,7 +7,7 @@
         </div>
     </c:if>
     <div>
-        <a type="button" class="btn btn-primary btn-md" href="TodoList/new">Add Todo</a>
+        <a type="button" class="btn btn-primary btn-md" href="new">Add Todo</a>
     </div>
     <br>
     <div class="panel panel-primary">
@@ -35,15 +35,36 @@
                         <td><fmt:formatDate value="${todo.targetDate}"
                                             pattern="dd/MM/yyyy" /></td>
                         <td><a type="button" class="btn btn-success"
-                               href="TodoList/edit?id=${todo.id}">Update</a>
+                               href="edit?id=${todo.id}">Update</a>
                             </td>
                         <td><a type="button" class="btn btn-warning"
-                               href="TodoList/delete?id=${todo.id}">Delete</a></td>
+                               href="delete?id=${todo.id}">Delete</a></td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="pagination">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+            <c:choose>
+                <c:when test="${page==0}">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="" tabindex="-1"><i class="fa fa-arrow-left"></i></a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item">
+                        <a class="page-link" href="/TodoList/?page=${page-1}" tabindex="-1"><i class="fa fa-arrow-left"></i></a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
+            <li class="page-item">
+                <a class="page-link" href="/TodoList/?page=${page+1}"><i class="fa fa-arrow-right"></i></a>
+            </li>
+            </ul>
+        </nav>
     </div>
 </div>
 <%@ include file="../common/footer.jspf"%>

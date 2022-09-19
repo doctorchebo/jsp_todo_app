@@ -5,7 +5,11 @@ import com.mamu.todo_app.model.Todo;
 import com.mamu.todo_app.repository.TodoRepository;
 import com.mamu.todo_app.service.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import static com.mamu.todo_app.constants.TodoConstants.RESOURCE_NOT_FOUND;
 
@@ -21,8 +25,9 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<Todo> getAll() {
-        return todoRepository.findAll();
+    public List<Todo> getAll(int page, int size, String sortDir, String sort) {
+        Pageable pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
+        return todoRepository.findAll(pageReq).getContent();
     }
 
     @Override

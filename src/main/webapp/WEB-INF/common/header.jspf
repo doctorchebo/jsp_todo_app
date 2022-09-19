@@ -6,6 +6,7 @@
 	<head>
 		<title>Todo List</title>
 		<link href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<style><%@include file="../styles/styles.css"%></style>
 	</head>
 	<body>

@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: saddlebrown">
         <div class="p-2">
-            <a href="/TodoList" class="navbar-brand"> Todo App</a>
+            <a href="/TodoList/" class="navbar-brand"> Todo App</a>
         </div>
     </nav>
 </header>
