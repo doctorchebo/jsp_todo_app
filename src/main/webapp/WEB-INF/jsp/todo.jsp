@@ -43,7 +43,12 @@
                             </form:select>
                             <form:errors path="status" cssClass="text-warning" />
                         </fieldset>
-
+                        <fieldset class="form-group">
+                            <form:label path="startDate">Start Date</form:label>
+                            <form:input path="startDate" type="text" placeholder="dd/mm/yyyy" class="form-control"
+                                        required="required" />
+                            <form:errors path="startDate" cssClass="text-warning" />
+                        </fieldset>
                         <fieldset class="form-group">
                             <form:label path="targetDate">Target Date</form:label>
                             <form:input path="targetDate" type="text" placeholder="dd/mm/yyyy" class="form-control"

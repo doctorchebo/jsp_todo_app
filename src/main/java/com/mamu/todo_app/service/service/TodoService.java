@@ -3,9 +3,10 @@ import com.mamu.todo_app.model.Todo;
 import java.util.List;
 
 public interface TodoService {
-    List<Todo> getAll();
+    List<Todo> getAll(int page, int size, String sortDir, String sort);
     Todo findById(Long id);
     void save(Todo todo);
     void update(Todo todo);
     void delete(Long id);
+    void complete (Long id);
 }

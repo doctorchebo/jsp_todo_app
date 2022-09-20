@@ -2,6 +2,12 @@ a {
     text-decoration: none;
     color: white;
 }
+.pagination {
+    position: fixed;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .footer {
     position: fixed;
     left: 0;
@@ -11,4 +17,8 @@ a {
     color: white;
     height: 2rem;
     text-align: center;
+}
+
+.complete {
+    color: darkgreen;
 }

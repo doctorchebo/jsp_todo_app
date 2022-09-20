@@ -5,9 +5,14 @@ import com.mamu.todo_app.model.Todo;
 import com.mamu.todo_app.repository.TodoRepository;
 import com.mamu.todo_app.service.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import static com.mamu.todo_app.constants.TodoConstants.RESOURCE_NOT_FOUND;
+import static com.mamu.todo_app.types.StatusType.COMPLETE;
 
 @Service
 public class TodoServiceImpl implements TodoService {
@@ -21,8 +26,9 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<Todo> getAll() {
-        return todoRepository.findAll();
+    public List<Todo> getAll(int page, int size, String sortDir, String sort) {
+        Pageable pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
+        return todoRepository.findAll(pageReq).getContent();
     }
 
     @Override
@@ -61,6 +67,22 @@ public class TodoServiceImpl implements TodoService {
             todoRepository.findById(id).orElseThrow(() ->
                     new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, id)));
             todoRepository.deleteById(id);
+        } catch (Exception e){
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void complete(Long id) {
+        try {
+            Todo todo = todoRepository.findById(id).orElseThrow(() ->
+                    new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, id)));
+            todo.setTitle(todo.getTitle());
+            todo.setDescription(todo.getDescription());
+            todo.setStatus(COMPLETE);
+            todo.setStartDate(todo.getStartDate());
+            todo.setTargetDate(todo.getTargetDate());
+            todoRepository.save(todo);
         } catch (Exception e){
             throw new IllegalStateException(e.getMessage());
         }
