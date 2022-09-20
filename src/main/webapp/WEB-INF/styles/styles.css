@@ -1,0 +1,14 @@
+a {
+    text-decoration: none;
+    color: white;
+}
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: saddlebrown;
+    color: white;
+    height: 2rem;
+    text-align: center;
+}
