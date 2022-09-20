@@ -28,7 +28,6 @@ public class TodoController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
-
     @GetMapping("/")
     public String findAll(@RequestParam(value = "page", defaultValue = "0") int page,
                           @RequestParam(value = "size", defaultValue = "5") int size,
@@ -40,6 +39,7 @@ public class TodoController {
         model.put("size", size);
         model.put("sortDir", sortDir);
         model.put("sort", sort);
+        model.put("todo", new Todo());
         return "todoList";
     }
 
@@ -83,6 +83,16 @@ public class TodoController {
     @GetMapping("/complete")
     public String completeTodo(@RequestParam Long id){
         todoService.complete(id);
+        return "redirect:/TodoList/";
+    }
+
+    @PostMapping("/search")
+    public String search(@ModelAttribute("todo") BindingResult result, Todo todo, ModelMap model) {
+        if(result.hasErrors()){
+            return "todoList";
+        }
+        Todo todoFiltered = todoService.findByTitle(todo.getTitle());
+        model.addAttribute("todo", todoFiltered);
         return "redirect:/TodoList/";
     }
 }

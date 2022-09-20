@@ -43,6 +43,17 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    public Todo findByTitle(String title) {
+        try{
+            Todo todo = todoRepository.findByTitle(title).orElseThrow(() ->
+                    new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, title)));
+            return todo;
+        } catch (Exception e){
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
+
+    @Override
     public void save(Todo todo) {
         try {
             todoRepository.save(todo);

@@ -6,6 +6,15 @@
                 ${message}
         </div>
     </c:if>
+    <%--@elvariable id="todo" type="long"--%>
+    <form:form action="/search" modelAttribute="todo" method="post" class="form-control">
+        <div alight="left">
+            <form:label path="title">Todo Title:</form:label>
+            <form:input path="title"/><br/>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-info">Search</button>
+    </form:form>
     <div>
         <a type="button" class="btn btn-primary btn-md" href="new">Add Todo</a>
     </div>
