@@ -22,3 +22,22 @@ a {
 .complete {
     color: darkgreen;
 }
+
+.form-group {
+    position: relative;
+}
+
+.list-group {
+   position: absolute;
+    width: 100%;
+    top: 100%;
+    z-index: 100;
+}
+
+.list-group:hover {
+    cursor: pointer;
+}
+
+.search-form {
+    position: relative;
+}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/TodoList")
@@ -87,12 +88,19 @@ public class TodoController {
     }
 
     @PostMapping("/search")
-    public String search(@ModelAttribute("todo") BindingResult result, Todo todo, ModelMap model) {
+    public String search(@ModelAttribute("todo") Todo input, BindingResult result, ModelMap model) {
         if(result.hasErrors()){
             return "todoList";
         }
-        Todo todoFiltered = todoService.findByTitle(todo.getTitle());
-        model.addAttribute("todo", todoFiltered);
-        return "redirect:/TodoList/";
+        List<Todo> todosFiltered = todoService.findByTitle(input.getTitle());
+        model.addAttribute("todos", todosFiltered);
+        return "todoList";
+    }
+    @ResponseBody
+    @PostMapping("/searchTitles")
+    public List<String> searchTitles (@RequestParam(value = "title", required = false, defaultValue = "")
+                                        String title){
+        List<String> titles = todoService.findMatchesByTitle(title);
+        return titles;
     }
 }

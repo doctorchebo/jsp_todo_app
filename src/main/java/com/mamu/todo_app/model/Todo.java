@@ -45,4 +45,8 @@ public class Todo {
         this.status = status;
         this.targetDate = targetDate;
     }
+
+    public Todo(String title) {
+        this.title = title;
+    }
 }

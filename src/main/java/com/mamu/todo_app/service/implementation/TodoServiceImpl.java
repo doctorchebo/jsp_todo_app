@@ -11,7 +11,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import static com.mamu.todo_app.constants.TodoConstants.RESOURCE_NOT_FOUND;
+import java.util.stream.Collectors;
+
+import static com.mamu.todo_app.constants.TodoConstants.TODO_ID_NOT_FOUND;
+import static com.mamu.todo_app.constants.TodoConstants.TODO_TITLE_NOT_FOUND;
 import static com.mamu.todo_app.types.StatusType.COMPLETE;
 
 @Service
@@ -35,7 +38,7 @@ public class TodoServiceImpl implements TodoService {
     public Todo findById(Long id) {
         try{
             Todo todo = todoRepository.findById(id).orElseThrow(() ->
-                    new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, id)));
+                    new ResourceNotFoundException(String.format(TODO_ID_NOT_FOUND, id)));
             return todo;
         } catch (Exception e){
             throw new IllegalStateException(e.getMessage());
@@ -43,11 +46,22 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public Todo findByTitle(String title) {
+    public List<Todo> findByTitle(String title) {
         try{
-            Todo todo = todoRepository.findByTitle(title).orElseThrow(() ->
-                    new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, title)));
-            return todo;
+            return todoRepository.findByTitleStartsWithIgnoreCase(title);
+        } catch (Exception e){
+            throw new IllegalStateException(e.getMessage());
+        }
+    }
+    @Override
+    public List<String> findMatchesByTitle(String title) {
+        String list = "<li class='list-group-item float' id='%s'>%s</li>";
+        try{
+            List<Todo> todos = todoRepository.findByTitleStartsWithIgnoreCase(title);
+            List<String> titles = todos.stream()
+                    .map(todo -> String.format(list,todo.getId(), todo.getTitle()))
+                    .collect(Collectors.toList());
+            return titles;
         } catch (Exception e){
             throw new IllegalStateException(e.getMessage());
         }
@@ -76,7 +90,7 @@ public class TodoServiceImpl implements TodoService {
     public void delete(Long id) {
         try{
             todoRepository.findById(id).orElseThrow(() ->
-                    new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, id)));
+                    new ResourceNotFoundException(String.format(TODO_ID_NOT_FOUND, id)));
             todoRepository.deleteById(id);
         } catch (Exception e){
             throw new IllegalStateException(e.getMessage());
@@ -87,7 +101,7 @@ public class TodoServiceImpl implements TodoService {
     public void complete(Long id) {
         try {
             Todo todo = todoRepository.findById(id).orElseThrow(() ->
-                    new ResourceNotFoundException(String.format(RESOURCE_NOT_FOUND, id)));
+                    new ResourceNotFoundException(String.format(TODO_ID_NOT_FOUND, id)));
             todo.setTitle(todo.getTitle());
             todo.setDescription(todo.getDescription());
             todo.setStatus(COMPLETE);

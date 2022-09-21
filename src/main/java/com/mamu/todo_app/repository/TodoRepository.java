@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface TodoRepository extends JpaRepository<Todo, Long>, PagingAndSortingRepository<Todo, Long> {
     Page<Todo> findAll(Pageable pageable);
     Optional<Todo> findById(Long id);
-    Optional<Todo> findByTitle(String title);
+    List<Todo> findByTitleStartsWithIgnoreCase(String title);
     Todo save(Todo todo);
     void deleteById(Long id);
 }

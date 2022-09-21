@@ -7,16 +7,16 @@
         </div>
     </c:if>
     <%--@elvariable id="todo" type="long"--%>
-    <form:form action="/search" modelAttribute="todo" method="post" class="form-control">
-        <div alight="left">
-            <form:label path="title">Todo Title:</form:label>
-            <form:input path="title"/><br/>
+    <form:form action="/TodoList/searchTitles" modelAttribute="todo" method="post" class="search-form w-25">
+        <div class="d-flex">
+            <form:input path="title" class="form-control me-2" placeholder="search by title"/><br/>
+            <ul id="list-group" class="list-group"></ul>
+            <button type="submit" class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
-        <br>
-        <button type="submit" class="btn btn-info">Search</button>
     </form:form>
     <div>
         <a type="button" class="btn btn-primary btn-md" href="new">Add Todo</a>
+
     </div>
     <br>
     <div class="panel panel-primary">
