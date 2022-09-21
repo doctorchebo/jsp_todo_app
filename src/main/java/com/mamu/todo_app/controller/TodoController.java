@@ -3,6 +3,7 @@ import com.mamu.todo_app.model.Todo;
 import com.mamu.todo_app.service.implementation.TodoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -35,7 +36,11 @@ public class TodoController {
                           @RequestParam(value = "sortDir", defaultValue = "ASC") String sortDir,
                           @RequestParam(value = "sort", defaultValue = "title") String sort,
                           ModelMap model) {
-        model.put("todos", todoService.getAll(page, size, sortDir, sort));
+        Page<Todo> todos = todoService.getAll(page, size, sortDir, sort);
+        model.put("todos", todos.getContent());
+        model.put("totalCount", todos.getTotalElements());
+        model.put("totalPages", todos.getTotalPages());
+        model.put("pageSize", todos.getContent().size());
         model.put("page", page);
         model.put("size", size);
         model.put("sortDir", sortDir);

@@ -5,6 +5,7 @@ import com.mamu.todo_app.model.Todo;
 import com.mamu.todo_app.repository.TodoRepository;
 import com.mamu.todo_app.service.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -32,9 +33,9 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<Todo> getAll(int page, int size, String sortDir, String sort) {
+    public Page<Todo> getAll(int page, int size, String sortDir, String sort) {
         Pageable pageReq = PageRequest.of(page, size, Sort.Direction.fromString(sortDir), sort);
-        return todoRepository.findAll(pageReq).getContent();
+        return todoRepository.findAll(pageReq);
     }
 
     @Override

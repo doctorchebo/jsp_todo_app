@@ -11,8 +11,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 import static com.mamu.todo_app.constants.TodoConstants.*;
@@ -28,8 +30,10 @@ public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 3, message = TITLE_VALIDATION_SIZE_MESSAGE)
     @NotEmpty(message = TITLE_VALIDATION_MESSAGE)
     private String title;
+    @Size(min = 3, message = DESCRIPTION_VALIDATION_SIZE_MESSAGE)
     @NotEmpty(message = DESCRIPTION_VALIDATION_MESSAGE)
     private String description;
     @NotNull(message = STATUS_VALIDATION_MESSAGE)
