@@ -11,10 +11,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static com.mamu.todo_app.constants.TodoConstants.TODO_ID_NOT_FOUND;
-import static com.mamu.todo_app.constants.TodoConstants.TODO_TITLE_NOT_FOUND;
 import static com.mamu.todo_app.types.StatusType.COMPLETE;
 
 @Service
@@ -48,7 +51,7 @@ public class TodoServiceImpl implements TodoService {
     @Override
     public List<Todo> findByTitle(String title) {
         try{
-            return todoRepository.findByTitleStartsWithIgnoreCase(title);
+            return todoRepository.findByTitle(title);
         } catch (Exception e){
             throw new IllegalStateException(e.getMessage());
         }
@@ -57,14 +60,20 @@ public class TodoServiceImpl implements TodoService {
     public List<String> findMatchesByTitle(String title) {
         String list = "<li class='list-group-item float' id='%s'>%s</li>";
         try{
-            List<Todo> todos = todoRepository.findByTitleStartsWithIgnoreCase(title);
+            List<Todo> todos = todoRepository.findByTitle(title);
             List<String> titles = todos.stream()
+                    .filter(distinctByKey(t -> t.getTitle()))
                     .map(todo -> String.format(list,todo.getId(), todo.getTitle()))
                     .collect(Collectors.toList());
             return titles;
         } catch (Exception e){
             throw new IllegalStateException(e.getMessage());
         }
+    }
+    public static <T> Predicate<T> distinctByKey(
+            Function<? super T, ?> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 
     @Override
