@@ -24,7 +24,7 @@
                     <form:form method="post" modelAttribute="todo" class="form-control">
                         <form:hidden path="id" />
                         <fieldset class="form-group">
-                            <form:label class="basicAutoComplete" path="title">Title</form:label>
+                            <form:label class="title" path="title">Title</form:label>
                             <form:input path="title" type="text" class="form-control"
                                         required="required" list="titleList"/>
                             <ul id='list-group' class="list-group"></ul>
