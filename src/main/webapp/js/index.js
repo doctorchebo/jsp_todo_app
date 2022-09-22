@@ -11,7 +11,7 @@ $('#title').keyup(function(){
         $('#detail').html('')
         $('.list-group').css('display', 'block')
         $.ajax({
-            url: currentURL.endsWith("TodoList/") ? '/TodoList/searchTitles' : '/TodoList/searchTitlesFromDB',
+            url: currentURL.endsWith("TodoList/") ? '/TodoList/searchTitles' : '/TodoList/searchTitlesFromJSON',
             method: 'POST',
             data: {title: title},
             success: function(data){

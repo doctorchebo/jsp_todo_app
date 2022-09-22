@@ -11,4 +11,9 @@ public final class TodoConstants {
     public static final String TODOS_JSON = System.getProperty("user.dir") + "/src/main/resources/data/todos.json";
 
     public static final String LIST_HTML_ELEMENT = "<li class='list-group-item float' id='%s'>%s</li>";
+    public static final String DEFAULT_PAGE = "0";
+    public static final String PAGE_SIZE = "5";
+    public static final String DEFAULT_SORT_DIRECTION = "ASC";
+    public static final String DEFAULT_SORT_FIELD = "title";
+    public static final String DATE_PATTERN = "dd/MM/yyyy";
 }

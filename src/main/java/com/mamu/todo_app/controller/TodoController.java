@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.mamu.todo_app.constants.TodoConstants.*;
+
 @Controller
 @RequestMapping("/TodoList")
 public class TodoController {
@@ -27,14 +29,14 @@ public class TodoController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // Date - dd/MM/yyyy
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
     @GetMapping("/")
-    public String findAll(@RequestParam(value = "page", defaultValue = "0") int page,
-                          @RequestParam(value = "size", defaultValue = "5") int size,
-                          @RequestParam(value = "sortDir", defaultValue = "ASC") String sortDir,
-                          @RequestParam(value = "sort", defaultValue = "title") String sort,
+    public String findAll(@RequestParam(value = "page", defaultValue = DEFAULT_PAGE) int page,
+                          @RequestParam(value = "size", defaultValue = PAGE_SIZE) int size,
+                          @RequestParam(value = "sortDir", defaultValue = DEFAULT_SORT_DIRECTION) String sortDir,
+                          @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_FIELD) String sort,
                           ModelMap model) {
         Page<Todo> todos = todoService.getAll(page, size, sortDir, sort);
         model.put("todos", todos.getContent());
@@ -109,10 +111,10 @@ public class TodoController {
         return titles;
     }
     @ResponseBody
-    @PostMapping("/searchTitlesFromDB")
+    @PostMapping("/searchTitlesFromJSON")
     public List<String> searchTitlesFromDB (@RequestParam(value = "title", required = false, defaultValue = "")
                                       String title){
-        List<String> titles = todoService.findByTitleInDB(title);
+        List<String> titles = todoService.findByTitleFromJSON(title);
         return titles;
     }
 }

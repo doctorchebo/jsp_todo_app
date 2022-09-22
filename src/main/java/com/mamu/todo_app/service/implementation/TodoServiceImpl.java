@@ -88,7 +88,7 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public List<String> findByTitleInDB(String title) {
+    public List<String> findByTitleFromJSON(String title) {
         JSONParser jsonParser = new JSONParser();
         try {
             FileReader fileReader = new FileReader(TODOS_JSON);
