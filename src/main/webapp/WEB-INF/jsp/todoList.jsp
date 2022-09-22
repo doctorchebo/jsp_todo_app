@@ -6,8 +6,17 @@
                 ${message}
         </div>
     </c:if>
+    <%--@elvariable id="todo" type="long"--%>
+    <form:form action="/TodoList/search" modelAttribute="todo" method="post" class="search-form w-25">
+        <div class="d-flex">
+            <form:input path="title" class="form-control me-2" placeholder="search by title"/><br/>
+            <ul id="list-group" class="list-group"></ul>
+            <button type="submit" class="btn btn-info"><i class="fa fa-search" aria-hidden="true"></i></button>
+        </div>
+    </form:form>
     <div>
         <a type="button" class="btn btn-primary btn-md" href="new">Add Todo</a>
+
     </div>
     <br>
     <div class="panel panel-primary">
@@ -43,8 +52,15 @@
                             </td>
                         <td><a type="button" class="btn btn-warning"
                                href="delete?id=${todo.id}">Delete</a></td>
-                        <td class="text-center"><a type="button" class="btn btn-light"
-                               href="complete?id=${todo.id}"><i class="fa fa-check-circle" aria-hidden="true"></i></a></td>
+                        <c:choose>
+                            <c:when test="${todo.status=='PENDING'}">
+                                <td class="text-center">
+                                    <a type="button" class="pending btn btn-light"
+                                                           href="complete?id=${todo.id}"><i class="fa fa-check-circle" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </c:when>
+                        </c:choose>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -66,9 +82,18 @@
                     </li>
                 </c:otherwise>
             </c:choose>
-            <li class="page-item">
-                <a class="page-link" href="/TodoList/?page=${page+1}"><i class="fa fa-arrow-right"></i></a>
-            </li>
+            <c:choose>
+                <c:when test="${pageSize >= 5 && totalCount>5}">
+                    <li class="page-item">
+                        <a class="page-link" href="/TodoList/?page=${page+1}"><i class="fa fa-arrow-right"></i></a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item disabled">
+                        <a class="page-link" href="/TodoList/?page=${page+1}"><i class="fa fa-arrow-right"></i></a>
+                    </li>
+                </c:otherwise>
+            </c:choose>
             </ul>
         </nav>
     </div>

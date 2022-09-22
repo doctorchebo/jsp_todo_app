@@ -3,6 +3,7 @@ import com.mamu.todo_app.model.Todo;
 import com.mamu.todo_app.service.implementation.TodoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import static com.mamu.todo_app.constants.TodoConstants.*;
 
 @Controller
 @RequestMapping("/TodoList")
@@ -25,21 +29,25 @@ public class TodoController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // Date - dd/MM/yyyy
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
-
     @GetMapping("/")
-    public String findAll(@RequestParam(value = "page", defaultValue = "0") int page,
-                          @RequestParam(value = "size", defaultValue = "5") int size,
-                          @RequestParam(value = "sortDir", defaultValue = "ASC") String sortDir,
-                          @RequestParam(value = "sort", defaultValue = "title") String sort,
+    public String findAll(@RequestParam(value = "page", defaultValue = DEFAULT_PAGE) int page,
+                          @RequestParam(value = "size", defaultValue = PAGE_SIZE) int size,
+                          @RequestParam(value = "sortDir", defaultValue = DEFAULT_SORT_DIRECTION) String sortDir,
+                          @RequestParam(value = "sort", defaultValue = DEFAULT_SORT_FIELD) String sort,
                           ModelMap model) {
-        model.put("todos", todoService.getAll(page, size, sortDir, sort));
+        Page<Todo> todos = todoService.getAll(page, size, sortDir, sort);
+        model.put("todos", todos.getContent());
+        model.put("totalCount", todos.getTotalElements());
+        model.put("totalPages", todos.getTotalPages());
+        model.put("pageSize", todos.getContent().size());
         model.put("page", page);
         model.put("size", size);
         model.put("sortDir", sortDir);
         model.put("sort", sort);
+        model.put("todo", new Todo());
         return "todoList";
     }
 
@@ -84,5 +92,29 @@ public class TodoController {
     public String completeTodo(@RequestParam Long id){
         todoService.complete(id);
         return "redirect:/TodoList/";
+    }
+
+    @PostMapping("/search")
+    public String search(@ModelAttribute("todo") Todo input, BindingResult result, ModelMap model) {
+        if(result.hasErrors()){
+            return "todoList";
+        }
+        List<Todo> todosFiltered = todoService.findByTitle(input.getTitle());
+        model.addAttribute("todos", todosFiltered);
+        return "todoList";
+    }
+    @ResponseBody
+    @PostMapping("/searchTitles")
+    public List<String> searchTitles (@RequestParam(value = "title", required = false, defaultValue = "")
+                                        String title){
+        List<String> titles = todoService.findMatchesByTitle(title);
+        return titles;
+    }
+    @ResponseBody
+    @PostMapping("/searchTitlesFromJSON")
+    public List<String> searchTitlesFromDB (@RequestParam(value = "title", required = false, defaultValue = "")
+                                      String title){
+        List<String> titles = todoService.findByTitleFromJSON(title);
+        return titles;
     }
 }

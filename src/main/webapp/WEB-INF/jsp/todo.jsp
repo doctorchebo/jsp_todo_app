@@ -24,9 +24,10 @@
                     <form:form method="post" modelAttribute="todo" class="form-control">
                         <form:hidden path="id" />
                         <fieldset class="form-group">
-                            <form:label path="title">Title</form:label>
+                            <form:label class="title" path="title">Title</form:label>
                             <form:input path="title" type="text" class="form-control"
-                                        required="required" />
+                                        required="required" list="titleList"/>
+                            <ul id='list-group' class="list-group"></ul>
                             <form:errors path="title" cssClass="text-warning" />
                         </fieldset>
                         <fieldset class="form-group">
@@ -63,4 +64,5 @@
         </div>
     </div>
 </div>
+
 <%@ include file="../common/footer.jspf"%>

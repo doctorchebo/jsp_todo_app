@@ -22,3 +22,28 @@ a {
 .complete {
     color: darkgreen;
 }
+
+.form-group {
+    position: relative;
+}
+
+.list-group {
+   position: absolute;
+    width: 100%;
+    top: 100%;
+    z-index: 100;
+}
+
+.list-group:hover {
+    cursor: pointer;
+}
+
+.search-form {
+    position: relative;
+}
+
+.pending:hover {
+    background-color:#198754 !important;
+    border: 1px rgba(0, 0, 0, 0.5);
+}
+
