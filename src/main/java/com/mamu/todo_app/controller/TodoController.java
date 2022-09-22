@@ -108,4 +108,11 @@ public class TodoController {
         List<String> titles = todoService.findMatchesByTitle(title);
         return titles;
     }
+    @ResponseBody
+    @PostMapping("/searchTitlesFromDB")
+    public List<String> searchTitlesFromDB (@RequestParam(value = "title", required = false, defaultValue = "")
+                                      String title){
+        List<String> titles = todoService.findByTitleInDB(title);
+        return titles;
+    }
 }

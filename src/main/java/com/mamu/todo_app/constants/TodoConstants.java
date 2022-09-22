@@ -8,5 +8,7 @@ public final class TodoConstants {
     public static final String DESCRIPTION_VALIDATION_MESSAGE = "Description is required";
     public static final String DESCRIPTION_VALIDATION_SIZE_MESSAGE = "The description should be at least 3 characters";
     public static final String STATUS_VALIDATION_MESSAGE = "Status cannot be null";
+    public static final String TODOS_JSON = System.getProperty("user.dir") + "/src/main/resources/data/todos.json";
 
+    public static final String LIST_HTML_ELEMENT = "<li class='list-group-item float' id='%s'>%s</li>";
 }

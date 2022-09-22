@@ -5,12 +5,13 @@ $('#startDate').datepicker({
     format : 'dd/mm/yyyy'
 });
 $('#title').keyup(function(){
+    let currentURL = $(location).attr('href');
     let title = $('#title').val();
     if(title.length>=3){
         $('#detail').html('')
         $('.list-group').css('display', 'block')
         $.ajax({
-            url: '/TodoList/searchTitles',
+            url: currentURL.endsWith("TodoList/") ? '/TodoList/searchTitles' : '/TodoList/searchTitlesFromDB',
             method: 'POST',
             data: {title: title},
             success: function(data){

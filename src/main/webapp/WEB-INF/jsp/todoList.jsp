@@ -7,7 +7,7 @@
         </div>
     </c:if>
     <%--@elvariable id="todo" type="long"--%>
-    <form:form action="/TodoList/searchTitles" modelAttribute="todo" method="post" class="search-form w-25">
+    <form:form action="/TodoList/search" modelAttribute="todo" method="post" class="search-form w-25">
         <div class="d-flex">
             <form:input path="title" class="form-control me-2" placeholder="search by title"/><br/>
             <ul id="list-group" class="list-group"></ul>

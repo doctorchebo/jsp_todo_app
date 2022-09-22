@@ -10,6 +10,8 @@ public interface TodoService {
     Todo findById(Long id);
     List<Todo> findByTitle(String title);
     List<String> findMatchesByTitle(String title);
+
+    List<String> findByTitleInDB(String title);
     void save(Todo todo);
     void update(Todo todo);
     void delete(Long id);
